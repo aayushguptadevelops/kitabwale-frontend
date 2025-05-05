@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Roboto_Mono } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
+import Providers from "@/providers/providers";
 
 const robotoMono = Roboto_Mono({
   subsets: ["latin"],
@@ -8,7 +11,7 @@ const robotoMono = Roboto_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Kitab Wale",
+  title: "KitabWale",
   description:
     "This is an e-commerce platform where you can buy or sell your used books at affordable prices.",
 };
@@ -20,7 +23,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={robotoMono.className}>{children}</body>
+      <body className={robotoMono.className}>
+        <Providers>
+          <Header />
+          {children}
+          <Footer />
+        </Providers>
+      </body>
     </html>
   );
 }
