@@ -38,6 +38,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import AuthPage from "@/components/auth-page";
 
 const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -95,6 +96,11 @@ const Header = () => {
             onClick: handleLoginClick,
           },
         ]),
+    {
+      icon: <Lock className="h-5 w-5" />,
+      label: "Login/Sign Up",
+      onClick: handleLoginClick,
+    },
     {
       icon: <User className="h-5 w-5" />,
       label: "My Profile",
@@ -317,6 +323,7 @@ const Header = () => {
           </div>
         </Link>
       </div>
+      <AuthPage isLoginOpen={isLoginOpen} setIsLoginOpen={handleLoginClick} />
     </header>
   );
 };
