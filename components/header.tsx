@@ -30,7 +30,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import { toggleLoginDialog } from "@/store/slice/user-slice";
+import { logout, toggleLoginDialog } from "@/store/slice/user-slice";
 import {
   Sheet,
   SheetContent,
@@ -39,6 +39,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import AuthPage from "@/components/auth-page";
+import { useLogoutMutation } from "@/store/api";
+import toast from "react-hot-toast";
 
 const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -47,17 +49,27 @@ const Header = () => {
   const isLoginOpen = useSelector(
     (state: RootState) => state.user.isLoginDialogOpen,
   );
-  const user = {
-    profilePicture: "",
-    name: "Aayush Gupta",
-    email: "aayushguptaworks@gmail.com",
-  };
-  const userPlaceholder = "";
+  const user = useSelector((state: RootState) => state.user.user);
+  const [logoutMutation] = useLogoutMutation();
+  const userPlaceholder = user?.name
+    ?.split(" ")
+    .map((name: string) => name[0])
+    .join("");
   const handleLoginClick = () => {
     dispatch(toggleLoginDialog());
     setIsDropdownOpen(false);
   };
-  const handleLogout = () => {};
+  const handleLogout = async () => {
+    try {
+      await logoutMutation({}).unwrap();
+      dispatch(logout());
+      toast.success("User logged out successfully!.");
+      setIsDropdownOpen(false);
+    } catch (e) {
+      console.error(e);
+      toast.error("Failed to logout.");
+    }
+  };
   const handleProtectionNavigation = (href: string) => {
     if (user) {
       router.push(href);
@@ -76,7 +88,10 @@ const Header = () => {
               <div className="flex items-center space-x-4 border-b p-2">
                 <Avatar className="-ml-2 h-12 w-12 rounded-full">
                   {user?.profilePicture ? (
-                    <AvatarImage alt="user_image"></AvatarImage>
+                    <AvatarImage
+                      src={user?.profilePicture}
+                      alt="user_image"
+                    ></AvatarImage>
                   ) : (
                     <AvatarFallback>{userPlaceholder}</AvatarFallback>
                   )}
@@ -96,11 +111,6 @@ const Header = () => {
             onClick: handleLoginClick,
           },
         ]),
-    {
-      icon: <Lock className="h-5 w-5" />,
-      label: "Login/Sign Up",
-      onClick: handleLoginClick,
-    },
     {
       icon: <User className="h-5 w-5" />,
       label: "My Profile",
@@ -146,13 +156,15 @@ const Header = () => {
       label: "Help",
       href: "/how-it-works",
     },
-    ...(user && [
-      {
-        icon: <LogOut className="h-5 w-5" />,
-        label: "Logout",
-        onClick: handleLogout,
-      },
-    ]),
+    ...(user && user
+      ? [
+          {
+            icon: <LogOut className="h-5 w-5" />,
+            label: "Logout",
+            onClick: handleLogout,
+          },
+        ]
+      : []),
   ];
 
   const MenuItems = ({ className = "" }) => (
@@ -229,7 +241,10 @@ const Header = () => {
               <Button variant="ghost">
                 <Avatar className="h-8 w-8 rounded-full">
                   {user?.profilePicture ? (
-                    <AvatarImage alt="user_image"></AvatarImage>
+                    <AvatarImage
+                      src={user?.profilePicture}
+                      alt="user_image"
+                    ></AvatarImage>
                   ) : userPlaceholder ? (
                     <AvatarFallback>{userPlaceholder}</AvatarFallback>
                   ) : (

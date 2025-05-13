@@ -23,6 +23,16 @@ import {
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
+import {
+  BASE_URL,
+  useForgotPasswordMutation,
+  useLoginMutation,
+  useRegisterMutation,
+} from "@/store/api";
+import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { authStatus, toggleLoginDialog } from "@/store/slice/user-slice";
+import { useRouter } from "next/navigation";
 
 interface LoginProps {
   isLoginOpen: boolean;
@@ -56,6 +66,12 @@ const AuthPage: React.FC<LoginProps> = ({ isLoginOpen, setIsLoginOpen }) => {
   const [googleLoading, setGoogleLoading] = useState(false);
   const [forgotPasswordLoading, setForgotPasswordLoading] = useState(false);
 
+  const [register] = useRegisterMutation();
+  const [login] = useLoginMutation();
+  const [forgotPassword] = useForgotPasswordMutation();
+  const dispatch = useDispatch();
+  const router = useRouter();
+
   const {
     register: registerLogin,
     handleSubmit: handleLoginSubmit,
@@ -71,6 +87,88 @@ const AuthPage: React.FC<LoginProps> = ({ isLoginOpen, setIsLoginOpen }) => {
     handleSubmit: handleForgotPasswordSubmit,
     formState: { errors: forgotPasswordError },
   } = useForm<forgotPasswordFormData>();
+
+  const onSubmitSignUp = async (data: SignUpFormData) => {
+    setSignupLoading(true);
+
+    try {
+      const { name, email, password, agreeTerms } = data;
+      const result = await register({
+        name,
+        email,
+        password,
+        agreeTerms,
+      }).unwrap();
+      if (result.success) {
+        toast.success(
+          "Verification link sent to email successfully. Please verify your email.",
+        );
+        dispatch(toggleLoginDialog());
+      }
+    } catch (e) {
+      console.error(e);
+      toast.error("Email already registered.");
+    } finally {
+      setSignupLoading(false);
+    }
+  };
+
+  const onSubmitLogin = async (data: LoginFormData) => {
+    setLoginLoading(true);
+
+    try {
+      const result = await login(data).unwrap();
+      if (result.success) {
+        toast.success("Logged in successfully!.");
+        dispatch(toggleLoginDialog());
+        dispatch(authStatus());
+        window.location.reload();
+      }
+    } catch (e) {
+      console.error(e);
+      toast.error("Email or Password is incorrect.");
+    } finally {
+      setLoginLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    setGoogleLoading(true);
+
+    try {
+      router.push(`${BASE_URL}/auth/google`);
+      dispatch(authStatus());
+      dispatch(toggleLoginDialog());
+      setTimeout(() => {
+        toast.success("Google Login successful!.");
+        setIsLoginOpen(false);
+      }, 3000);
+    } catch (e) {
+      console.error(e);
+      toast.error("Email or Password is incorrect.");
+    } finally {
+      setGoogleLoading(false);
+    }
+  };
+
+  const onSubmitForgotPassword = async (data: forgotPasswordFormData) => {
+    setForgotPasswordLoading(true);
+
+    try {
+      const result = await forgotPassword(data).unwrap();
+      if (result.success) {
+        toast.success("Password reset link sent to your email successfully!.");
+        setForgotPasswordSuccess(true);
+      }
+    } catch (e) {
+      console.error(e);
+      toast.error(
+        "Failed to send the password reset link to your email. Please try later.",
+      );
+    } finally {
+      setForgotPasswordLoading(false);
+    }
+  };
 
   return (
     <Dialog open={isLoginOpen} onOpenChange={setIsLoginOpen}>
@@ -100,7 +198,10 @@ const AuthPage: React.FC<LoginProps> = ({ isLoginOpen, setIsLoginOpen }) => {
                 transition={{ duration: 0.3 }}
               >
                 <TabsContent value="login" className="space-y-4">
-                  <form className="space-y-4">
+                  <form
+                    onSubmit={handleLoginSubmit(onSubmitLogin)}
+                    className="space-y-4"
+                  >
                     <div className="relative">
                       <Input
                         {...registerLogin("email", {
@@ -167,7 +268,10 @@ const AuthPage: React.FC<LoginProps> = ({ isLoginOpen, setIsLoginOpen }) => {
                     <p className="mx-2 text-sm text-gray-500">Or</p>
                     <div className="h-px flex-1 bg-gray-300"></div>
                   </div>
-                  <Button className="flex w-full items-center justify-center gap-2 border border-gray-300 bg-white text-gray-700 hover:bg-gray-50">
+                  <Button
+                    onClick={handleGoogleLogin}
+                    className="flex w-full items-center justify-center gap-2 border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+                  >
                     {googleLoading ? (
                       <>
                         <Loader2 className="mr-2 animate-spin" size={20} />
@@ -187,7 +291,10 @@ const AuthPage: React.FC<LoginProps> = ({ isLoginOpen, setIsLoginOpen }) => {
                   </Button>
                 </TabsContent>
                 <TabsContent value="signup" className="space-y-4">
-                  <form className="space-y-4">
+                  <form
+                    onSubmit={handleSignUpSubmit(onSubmitSignUp)}
+                    className="space-y-4"
+                  >
                     <div className="relative">
                       <Input
                         {...registerSignUp("name", {
@@ -291,7 +398,12 @@ const AuthPage: React.FC<LoginProps> = ({ isLoginOpen, setIsLoginOpen }) => {
                 </TabsContent>
                 <TabsContent value="forgot" className="space-y-4">
                   {!forgotPasswordSuccess ? (
-                    <form className="space-y-4">
+                    <form
+                      className="space-y-4"
+                      onSubmit={handleForgotPasswordSubmit(
+                        onSubmitForgotPassword,
+                      )}
+                    >
                       <div className="relative">
                         <Input
                           {...registerForgotPassword("email", {
