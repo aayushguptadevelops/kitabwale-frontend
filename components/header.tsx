@@ -55,10 +55,12 @@ const Header = () => {
     ?.split(" ")
     .map((name: string) => name[0])
     .join("");
+
   const handleLoginClick = () => {
     dispatch(toggleLoginDialog());
     setIsDropdownOpen(false);
   };
+
   const handleLogout = async () => {
     try {
       await logoutMutation({}).unwrap();
@@ -70,6 +72,7 @@ const Header = () => {
       toast.error("Failed to logout.");
     }
   };
+
   const handleProtectionNavigation = (href: string) => {
     if (user) {
       router.push(href);
@@ -79,6 +82,7 @@ const Header = () => {
       setIsDropdownOpen(false);
     }
   };
+
   const menuItems = [
     ...(user && user
       ? [
