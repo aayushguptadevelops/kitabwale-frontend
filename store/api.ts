@@ -16,12 +16,12 @@ const API_URLS = {
     `${BASE_URL}/user/profile/update/${userId}`,
 
   // Product related
-  PRODUCTS: `${BASE_URL}/products`,
-  PRODUCT_BY_ID: (productId: string) => `${BASE_URL}/products/${productId}`,
+  PRODUCTS: `${BASE_URL}/product`,
+  PRODUCT_BY_ID: (productId: string) => `${BASE_URL}/product/${productId}`,
   GET_PRODUCT_BY_SELLER_ID: (sellerId: string) =>
-    `${BASE_URL}/products/seller/${sellerId}`,
+    `${BASE_URL}/product/seller/${sellerId}`,
   DELETE_PRODUCT_BY_PRODUCT_ID: (productId: string) =>
-    `${BASE_URL}/products/seller/${productId}`,
+    `${BASE_URL}/product/seller/${productId}`,
 
   // Cart related
   CART: (userId: string) => `${BASE_URL}/cart/${userId}`,
