@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { books, filters } from "@/lib/constant";
+import { useEffect, useState } from "react";
+import { filters } from "@/lib/constant";
 import Link from "next/link";
 import {
   Accordion,
@@ -28,6 +28,8 @@ import { Heart } from "lucide-react";
 import Pagination from "@/components/pagination";
 import NoData from "@/components/no-data";
 import { useRouter } from "next/navigation";
+import { useGetProductsQuery } from "@/store/api";
+import { BookDetails } from "@/types";
 
 const Page = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -35,9 +37,18 @@ const Page = () => {
   const [selectedType, setSelectedType] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
   const [sortOption, setSortOption] = useState("newest");
-  const [isLoading, setIsLoading] = useState(false);
+  const { data: apiResponse = {}, isLoading } = useGetProductsQuery({});
+  const [books, setBooks] = useState<BookDetails[]>([]);
   const router = useRouter();
   const booksPerPage = 6;
+
+  useEffect(() => {
+    if (apiResponse.success) {
+      setBooks(apiResponse.data);
+    }
+  }, [apiResponse]);
+
+  console.log(books);
 
   const toggleFilter = (section: string, item: string) => {
     const updateFilter = (prev: string[]) => {
