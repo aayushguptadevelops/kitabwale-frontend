@@ -1,4 +1,5 @@
 export interface BookDetails {
+  _id: string;
   title: string;
   images: string[];
   subject: string;
