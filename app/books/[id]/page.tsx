@@ -36,11 +36,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { addToCart } from "@/store/slice/cart-slice";
 import toast from "react-hot-toast";
-import { error } from "console";
 import {
   addToWishlistAction,
   removeFromWishlistAction,
 } from "@/store/slice/wishlist-slice";
+import { ShareButton } from "@/components/share";
 
 const Page = () => {
   const params = useParams();
@@ -211,7 +211,11 @@ const Page = () => {
                 </p>
               </div>
               <div className="flex gap-2">
-                <Button variant="outline">Share</Button>
+                <ShareButton
+                  url={`${window.location.origin}/books/${book._id}`}
+                  title={`Check out this book: ${book.title}`}
+                  text={`I found this interesting book on KitabWale: ${book.title}`}
+                />
                 <Button
                   variant="outline"
                   size="sm"

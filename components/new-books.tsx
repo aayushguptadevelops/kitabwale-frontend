@@ -1,15 +1,24 @@
 "use client";
 
-import { books } from "@/lib/constant";
 import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { BookDetails } from "@/types";
+import { useGetProductsQuery } from "@/store/api";
 
 const NewBooks = () => {
   const [currentBookSlide, setCurrentBookSlide] = useState(0);
+  const [books, setBooks] = useState<BookDetails[]>([]);
+  const { data: apiResponse = {}, isLoading } = useGetProductsQuery({});
+
+  useEffect(() => {
+    if (apiResponse.success) {
+      setBooks(apiResponse.data);
+    }
+  }, [apiResponse]);
 
   useEffect(() => {
     const timer = setInterval(() => {

@@ -51,9 +51,8 @@ const Page = () => {
   console.log(books);
 
   const toggleFilter = (section: string, item: string) => {
-    const updateFilter = (prev: string[]) => {
+    const updateFilter = (prev: string[]) =>
       prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item];
-    };
 
     switch (section) {
       case "condition":
