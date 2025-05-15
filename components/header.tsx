@@ -26,7 +26,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
@@ -39,11 +39,13 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import AuthPage from "@/components/auth-page";
-import { useLogoutMutation } from "@/store/api";
+import { useGetCartQuery, useLogoutMutation } from "@/store/api";
 import toast from "react-hot-toast";
+import { setCart } from "@/store/slice/cart-slice";
 
 const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [searchTerms, setSearchTerms] = useState("");
   const router = useRouter();
   const dispatch = useDispatch();
   const isLoginOpen = useSelector(
@@ -55,6 +57,20 @@ const Header = () => {
     ?.split(" ")
     .map((name: string) => name[0])
     .join("");
+  const cartItemCount = useSelector(
+    (state: RootState) => state.cart.items.length,
+  );
+  const { data: cartData } = useGetCartQuery(user?._id, { skip: !user });
+
+  useEffect(() => {
+    if (cartData?.success && cartData?.data) {
+      dispatch(setCart(cartData.data));
+    }
+  }, [cartData, dispatch]);
+
+  const handleSearch = () => {
+    router.push(`/books?search=${encodeURIComponent(searchTerms.trim())}`);
+  };
 
   const handleLoginClick = () => {
     dispatch(toggleLoginDialog());
@@ -220,11 +236,14 @@ const Header = () => {
               type="text"
               placeholder="Book Name / Author / Subject / Publisher"
               className="w-full pr-10"
+              value={searchTerms.trim()}
+              onChange={(e) => setSearchTerms(e.target.value)}
             />
             <Button
               size="icon"
               variant="ghost"
               className="absolute top-1/2 right-0 -translate-y-1/2"
+              onClick={handleSearch}
             >
               <Search className="h-5 w-5" />
             </Button>
@@ -268,9 +287,9 @@ const Header = () => {
                 <ShoppingCart className="mr-2 h-5 w-5" />
                 Cart
               </Button>
-              {user && (
+              {user && cartItemCount > 0 && (
                 <span className="absolute top-2 left-4 translate-x-1/2 -translate-y-1/2 transform rounded-full bg-red-500 px-1 text-xs text-white">
-                  3
+                  {cartItemCount}
                 </span>
               )}
             </div>
@@ -334,9 +353,9 @@ const Header = () => {
             <Button variant="ghost" className="relative">
               <ShoppingCart className="mr-2 h-5 w-5" />
             </Button>
-            {user && (
+            {user && cartItemCount > 0 && (
               <span className="absolute top-2 left-4 translate-x-1/2 -translate-y-1/2 transform rounded-full bg-red-500 px-1 text-xs text-white">
-                3
+                {cartItemCount}
               </span>
             )}
           </div>

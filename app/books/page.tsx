@@ -42,13 +42,14 @@ const Page = () => {
   const router = useRouter();
   const booksPerPage = 6;
 
+  const searchTerms =
+    new URLSearchParams(window.location.search).get("search") || "";
+
   useEffect(() => {
     if (apiResponse.success) {
       setBooks(apiResponse.data);
     }
   }, [apiResponse]);
-
-  console.log(books);
 
   const toggleFilter = (section: string, item: string) => {
     const updateFilter = (prev: string[]) =>
@@ -84,8 +85,14 @@ const Page = () => {
       selectedCategory
         .map((cond) => cond.toLowerCase())
         .includes(book.category.toLowerCase());
+    const searchMatch = searchTerms
+      ? book.title.toLowerCase().includes(searchTerms.toLowerCase()) ||
+        book.author.toLowerCase().includes(searchTerms.toLowerCase()) ||
+        book.category.toLowerCase().includes(searchTerms.toLowerCase()) ||
+        book.subject.toLowerCase().includes(searchTerms.toLowerCase())
+      : true;
 
-    return conditionMatch && typeMatch && categoryMatch;
+    return conditionMatch && typeMatch && categoryMatch && searchMatch;
   });
 
   const sortedBooks = [...filterBooks].sort((a, b) => {
