@@ -37,6 +37,10 @@ import { RootState } from "@/store/store";
 import { addToCart } from "@/store/slice/cart-slice";
 import toast from "react-hot-toast";
 import { error } from "console";
+import {
+  addToWishlistAction,
+  removeFromWishlistAction,
+} from "@/store/slice/wishlist-slice";
 
 const Page = () => {
   const params = useParams();
@@ -85,7 +89,33 @@ const Page = () => {
     }
   };
 
-  const handleAddToWishlist = (productId: string) => {};
+  const handleAddToWishlist = async (productId: string) => {
+    try {
+      const isWishlist = wishlist.some((item) =>
+        item.products.includes(productId),
+      );
+      if (isWishlist) {
+        const result = await removeFromWishlistMutation(productId).unwrap();
+        if (result.success) {
+          dispatch(removeFromWishlistAction(productId));
+          toast.success(result.message || "Removed from wishlist.");
+        } else {
+          throw new Error(result.message || "Failed to remove from wishlist.");
+        }
+      } else {
+        const result = await addToWishlistMutation(productId).unwrap();
+        if (result.success) {
+          dispatch(addToWishlistAction(result.data));
+          toast.success(result.message || "Added to wishlist.");
+        } else {
+          throw new Error(result.message || "Failed to add to wishlist.");
+        }
+      }
+    } catch (e: any) {
+      const errorMessage = e?.data?.message;
+      toast.error(errorMessage || "Failed to add to wishlist.");
+    }
+  };
 
   const bookImage = book?.images || [];
 
@@ -187,8 +217,14 @@ const Page = () => {
                   size="sm"
                   onClick={() => handleAddToWishlist(book._id)}
                 >
-                  <Heart className={`mr-1 h-4 w-4 fill-red-500`} />
-                  <span className="hidden md:inline">Add</span>
+                  <Heart
+                    className={`mr-1 h-4 w-4 ${wishlist.some((w) => w.products.includes(book._id)) ? "fill-red-500" : ""}`}
+                  />
+                  <span className="hidden md:inline">
+                    {wishlist.some((w) => w.products.includes(book._id))
+                      ? "Remove"
+                      : "Add"}
+                  </span>
                 </Button>
               </div>
             </div>
