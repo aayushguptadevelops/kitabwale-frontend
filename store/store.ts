@@ -12,6 +12,8 @@ import {
   REGISTER,
 } from "redux-persist";
 import userReducer from "@/store/slice/user-slice";
+import cartReducer from "@/store/slice/cart-slice";
+import wishlistReducer from "@/store/slice/wishlist-slice";
 import { api } from "@/store/api";
 
 // Persist configuration for User
@@ -20,14 +22,30 @@ const userPersistConfig = {
   storage,
   whitelist: ["user", "isEmailVerified", "isLoggedIn"],
 };
+const cartPersistConfig = {
+  key: "cart",
+  storage,
+  whitelist: ["items"],
+};
+const wishlistPersistConfig = {
+  key: "wishlist",
+  storage,
+};
 
 // Wrap reducers with persist config
 const persistedUserReducer = persistReducer(userPersistConfig, userReducer);
+const persistedCartReducer = persistReducer(cartPersistConfig, cartReducer);
+const persistedWishlistReducer = persistReducer(
+  wishlistPersistConfig,
+  wishlistReducer,
+);
 
 export const store = configureStore({
   reducer: {
     [api.reducerPath]: api.reducer, // rtk query api
     user: persistedUserReducer,
+    cart: persistedCartReducer,
+    wishlist: persistedWishlistReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
