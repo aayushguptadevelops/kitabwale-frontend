@@ -24,15 +24,26 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { BookDetails } from "@/types";
-import { useGetProductByIdQuery } from "@/store/api";
+import {
+  useAddToCartMutation,
+  useAddToWishlistMutation,
+  useGetProductByIdQuery,
+  useRemoveFromWishlistMutation,
+} from "@/store/api";
 import BookLoader from "@/components/book-loader";
 import NoData from "@/components/no-data";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { addToCart } from "@/store/slice/cart-slice";
+import toast from "react-hot-toast";
+import { error } from "console";
 
 const Page = () => {
   const params = useParams();
   const id = params.id;
   const [selectedImage, setSelectedImage] = useState(0);
   const router = useRouter();
+  const dispatch = useDispatch();
   const [isAddToCart, setIsAddToCart] = useState(false);
   const [book, setBook] = useState<BookDetails | null>(null);
   const {
@@ -40,6 +51,10 @@ const Page = () => {
     isLoading,
     isError,
   } = useGetProductByIdQuery(id);
+  const [addToCartMutation] = useAddToCartMutation();
+  const [addToWishlistMutation] = useAddToWishlistMutation();
+  const [removeFromWishlistMutation] = useRemoveFromWishlistMutation();
+  const wishlist = useSelector((state: RootState) => state.wishlist.items);
 
   useEffect(() => {
     if (apiResponse.success) {
@@ -47,7 +62,28 @@ const Page = () => {
     }
   }, [apiResponse]);
 
-  const handleAddToCart = (productId: string) => {};
+  const handleAddToCart = async () => {
+    if (book) {
+      setIsAddToCart(true);
+      try {
+        const result = await addToCartMutation({
+          productId: book?._id,
+          quantity: 1,
+        }).unwrap();
+        if (result.success && result.data) {
+          dispatch(addToCart(result.data));
+          toast.success(result.message || "Added to cart successfully!.");
+        } else {
+          throw new Error(result.message || "Failed to add to cart.");
+        }
+      } catch (e: any) {
+        const errorMessage = e?.data?.message;
+        toast.error(errorMessage || "Failed to add to cart.");
+      } finally {
+        setIsAddToCart(false);
+      }
+    }
+  };
 
   const handleAddToWishlist = (productId: string) => {};
 
@@ -170,7 +206,11 @@ const Page = () => {
                   Shipping Available
                 </Badge>
               </div>
-              <Button className="w-60 bg-blue-700 py-6">
+              <Button
+                className="w-60 bg-blue-700 py-6"
+                onClick={handleAddToCart}
+                disabled={isAddToCart}
+              >
                 {isAddToCart ? (
                   <>
                     <Loader2 className="mr-2 animate-spin" size={20} />
