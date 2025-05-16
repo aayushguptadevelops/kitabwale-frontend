@@ -14,6 +14,7 @@ import {
 import userReducer from "@/store/slice/user-slice";
 import cartReducer from "@/store/slice/cart-slice";
 import wishlistReducer from "@/store/slice/wishlist-slice";
+import checkoutReducer from "@/store/slice/checkout-slice";
 import { api } from "@/store/api";
 
 // Persist configuration for User
@@ -31,6 +32,10 @@ const wishlistPersistConfig = {
   key: "wishlist",
   storage,
 };
+const checkoutPersistConfig = {
+  key: "checkout",
+  storage,
+};
 
 // Wrap reducers with persist config
 const persistedUserReducer = persistReducer(userPersistConfig, userReducer);
@@ -39,6 +44,10 @@ const persistedWishlistReducer = persistReducer(
   wishlistPersistConfig,
   wishlistReducer,
 );
+const persistedCheckoutReducer = persistReducer(
+  checkoutPersistConfig,
+  checkoutReducer,
+);
 
 export const store = configureStore({
   reducer: {
@@ -46,6 +55,7 @@ export const store = configureStore({
     user: persistedUserReducer,
     cart: persistedCartReducer,
     wishlist: persistedWishlistReducer,
+    checkout: persistedCheckoutReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
