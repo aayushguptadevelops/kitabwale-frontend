@@ -41,7 +41,7 @@ const API_URLS = {
   CREATE_RAZORPAY_PAYMENT: `${BASE_URL}/order/payment-razorpay`,
 
   // Address related
-  GET_ADDRESS: `${BASE_URL}/address`,
+  GET_ADDRESS: `${BASE_URL}/user/address`,
   ADD_OR_UPDATE_ADDRESS: `${BASE_URL}/user/address/create-or-update`,
 };
 
