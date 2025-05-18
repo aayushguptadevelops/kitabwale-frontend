@@ -109,7 +109,7 @@ export const api = createApi({
     updateUser: builder.mutation({
       query: ({ userId, userData }) => ({
         url: API_URLS.UPDATE_USER_PROFILE(userId),
-        method: "POST",
+        method: "PUT",
         body: userData,
       }),
     }),
