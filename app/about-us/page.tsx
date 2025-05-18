@@ -2,7 +2,7 @@
 
 import { BookOpen, Users, ShieldCheck } from "lucide-react";
 
-const AboutUs = () => {
+const AboutUsPage = () => {
   return (
     <div className="min-h-screen bg-gray-100 py-16">
       <div className="container mx-auto px-4">
@@ -144,4 +144,4 @@ const AboutUs = () => {
   );
 };
 
-export default AboutUs;
+export default AboutUsPage;

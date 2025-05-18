@@ -1,6 +1,6 @@
 "use client";
 
-const PrivacyPolicy = () => {
+const PrivacyPolicyPage = () => {
   return (
     <div className="min-h-screen bg-gray-100 py-16">
       <div className="container mx-auto px-4">
@@ -67,4 +67,4 @@ const PrivacyPolicy = () => {
   );
 };
 
-export default PrivacyPolicy;
+export default PrivacyPolicyPage;
