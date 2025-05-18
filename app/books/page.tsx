@@ -24,7 +24,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Heart } from "lucide-react";
+import { Heart, IndianRupee } from "lucide-react";
 import Pagination from "@/components/pagination";
 import NoData from "@/components/no-data";
 import { useRouter } from "next/navigation";
@@ -275,12 +275,14 @@ const Page = () => {
                               </p>
 
                               <div className="flex items-baseline gap-2">
-                                <span className="text-2xl font-bold text-black">
-                                  ₹{book.finalPrice}
+                                <span className="flex text-2xl font-bold text-black">
+                                  <IndianRupee className="mt-1.5 h-5 w-5" />
+                                  {book.finalPrice}
                                 </span>
                                 {book.price && (
-                                  <span className="text-sm text-zinc-500 line-through">
-                                    ₹{book.price}
+                                  <span className="flex text-sm text-zinc-500 line-through">
+                                    <IndianRupee className="mt-0.5 h-4 w-4" />
+                                    {book.price}
                                   </span>
                                 )}
                               </div>

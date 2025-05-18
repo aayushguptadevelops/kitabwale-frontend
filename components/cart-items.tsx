@@ -4,7 +4,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Heart, Trash2 } from "lucide-react";
+import { Heart, IndianRupee, Trash2 } from "lucide-react";
 
 interface CartItemsProps {
   items: CartItem[];
@@ -40,16 +40,24 @@ const CartItems: React.FC<CartItemsProps> = ({
             <div className="mt-1 text-sm text-gray-500">
               Quantity: {item.quantity}
             </div>
-            <div className="mt-1 font-medium">
-              <span className="mr-2 text-gray-500 line-through">
-                ₹{item.product.price}
+            <div className="mt-1 flex font-medium">
+              <span className="mr-2 flex text-gray-500 line-through">
+                <IndianRupee className="mt-1 h-4 w-4" />
+                {item.product.price.toFixed(2)}
               </span>
-              ₹{item.product.finalPrice}
+              <IndianRupee className="mt-1 h-4 w-4" />
+              {item.product.finalPrice.toFixed(2)}
             </div>
-            <div className="mt-1 text-sm text-green-600">
+            <div className="mt-1 flex text-sm text-green-600">
+              {item.product.shippingCharge !== "free" && (
+                <>
+                  Shipping:
+                  <IndianRupee className="mt-0.5 ml-1 h-4 w-4" />
+                </>
+              )}
               {item.product.shippingCharge === "free"
                 ? "Free Shipping"
-                : `Shipping: ₹${item.product.shippingCharge}`}
+                : `${parseFloat(item.product.shippingCharge).toFixed(2)}`}
             </div>
 
             <div className="mt-2 flex gap-2">

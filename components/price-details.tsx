@@ -7,7 +7,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, CreditCard, Shield } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  CreditCard,
+  IndianRupee,
+  Shield,
+} from "lucide-react";
 
 interface PriceDetailsProps {
   totalOriginalAmount: number;
@@ -40,24 +46,35 @@ const PriceDetails: React.FC<PriceDetailsProps> = ({
       <CardContent className="space-y-4">
         <div className="flex justify-between">
           <span>Price ({itemCount} items)</span>
-          <span>₹{totalOriginalAmount}</span>
+          <span className="flex">
+            <IndianRupee className="mt-1 h-4 w-4" />
+            {totalOriginalAmount.toFixed(2)}
+          </span>
         </div>
         <div className="flex justify-between text-green-600">
           <span>Discount</span>
-          <span>- ₹{totalDiscount}</span>
+          <span className="flex">
+            -
+            <IndianRupee className="mt-1 h-4 w-4" />
+            {totalDiscount.toFixed(2)}
+          </span>
         </div>
         <div className="flex justify-between">
           <span>Delivery Charges</span>
           <span
-            className={`${shippingCharge === 0 ? "text-green-600" : "text-black"}`}
+            className={`${shippingCharge === 0 ? "text-green-600" : "text-black"} flex`}
           >
-            {shippingCharge === 0 ? "Free" : `₹${shippingCharge}`}
+            {shippingCharge !== 0 && <IndianRupee className="mt-1 h-4 w-4" />}
+            {shippingCharge === 0 ? "Free" : `${shippingCharge.toFixed(2)}`}
           </span>
         </div>
 
         <div className="flex justify-between border-t pt-4 font-medium">
           <span>Total Amount</span>
-          <span>₹{totalAmount}</span>
+          <span className="flex">
+            <IndianRupee className="mt-1 h-4 w-4" />
+            {totalAmount.toFixed(2)}
+          </span>
         </div>
       </CardContent>
       <CardFooter className="flex flex-col gap-4">

@@ -18,6 +18,7 @@ import {
   CreditCard,
   DollarSign,
   HelpCircle,
+  IndianRupee,
   Loader2,
   X,
 } from "lucide-react";
@@ -513,7 +514,7 @@ const Page = () => {
                   htmlFor="finalPrice"
                   className="mt-4 font-medium text-gray-700 md:w-1/4"
                 >
-                  Your Price (₹)
+                  Your Price (<IndianRupee className="h-4 w-4" />)
                 </Label>
                 <div className="md:w-3/4">
                   <Input

@@ -18,6 +18,7 @@ import {
 import {
   Calendar,
   CheckCircle,
+  IndianRupee,
   MonitorDot,
   Package,
   Truck,
@@ -91,13 +92,14 @@ const Page = () => {
                   <p className="mt-1 text-sm text-gray-600">
                     Date:{" "}
                     <span className="font-medium text-blue-700">
-                      {new Date(createdAt).toLocaleDateString()}
+                      {new Date(createdAt).toLocaleDateString("en-IN")}
                     </span>
                   </p>
-                  <p className="mt-1 text-sm text-gray-600">
+                  <p className="mt-1 flex text-sm text-gray-600">
                     Total Amount:{" "}
-                    <span className="font-medium text-blue-700">
-                      ₹{totalAmount.toFixed(2)}
+                    <span className="flex font-medium text-blue-700">
+                      <IndianRupee className="mt-0.5 ml-1 h-4 w-4" />
+                      {totalAmount.toFixed(2)}
                     </span>
                   </p>
                   <p className="mt-1 text-sm text-gray-600">

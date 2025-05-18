@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, IndianRupee } from "lucide-react";
 import { BookDetails } from "@/types";
 import { useGetProductsQuery } from "@/store/api";
 
@@ -93,12 +93,14 @@ const NewBooks = () => {
                                   </h3>
                                   <div className="flex items-center justify-between">
                                     <div className="flex items-baseline gap-2">
-                                      <span className="text-lg font-bold">
-                                        ₹{book.finalPrice}
+                                      <span className="flex text-lg font-bold">
+                                        <IndianRupee className="mt-1.5 ml-1 h-4 w-4" />
+                                        {book.finalPrice}
                                       </span>
                                       {book.price && (
-                                        <span className="text-muted-foreground text-sm line-through">
-                                          ₹{book.price}
+                                        <span className="text-muted-foreground flex text-sm line-through">
+                                          <IndianRupee className="mt-1 ml-1 h-3 w-3" />
+                                          {book.price}
                                         </span>
                                       )}
                                     </div>

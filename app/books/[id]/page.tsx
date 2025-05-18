@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import {
   CheckCircle2,
   Heart,
+  IndianRupee,
   Loader2,
   MapPin,
   MessageCircle,
@@ -235,10 +236,14 @@ const Page = () => {
 
             <div className="space-y-4">
               <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-bold">₹{book.finalPrice}</span>
+                <span className="flex text-3xl font-bold">
+                  <IndianRupee className="mt-2 h-6 w-6" />
+                  {book.finalPrice}
+                </span>
                 {book.price && (
-                  <span className="text-muted-foreground text-lg line-through">
-                    ₹{book.price}
+                  <span className="text-muted-foreground flex text-lg line-through">
+                    <IndianRupee className="mt-1.5 h-4 w-4" />
+                    {book.price}
                   </span>
                 )}
 
