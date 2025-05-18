@@ -120,7 +120,7 @@ const OrderDetailsDialog: React.FC<OrderDetailsDialogProps> = ({ order }) => {
           <div className="rounded-lg bg-gradient-to-r from-blue-100 to-cyan-100 p-4">
             <h3 className="mb-2 text-lg font-semibold text-blue-800">Items</h3>
             <div className="space-y-4">
-              {order.items.map((items, index) => (
+              {order?.items.map((items, index) => (
                 <div key={index} className="flex items-center space-x-4">
                   <Image
                     src={items.product.images[0]}
@@ -133,7 +133,7 @@ const OrderDetailsDialog: React.FC<OrderDetailsDialogProps> = ({ order }) => {
                     <p className="font-medium">{items.product.title}</p>
                     <div className="flex gap-2">
                       <p className="font-medium">{items.product.subject}</p>(
-                      {order.items.map((item) => item.product.author).join(",")}
+                      {order?.items.map((item) => item.product.author).join(",")}
                       )
                     </div>
                     <p className="text-sm text-gray-600">
@@ -149,13 +149,13 @@ const OrderDetailsDialog: React.FC<OrderDetailsDialogProps> = ({ order }) => {
             <h3 className="mb-2 font-serif text-lg text-green-800">
               Shipping Address
             </h3>
-            <p>{order.shippingAddress.addressLine1}</p>
+            <p>{order?.shippingAddress?.addressLine1}</p>
             {order.shippingAddress.addressLine2 && (
-              <p>{order?.shippingAddress.addressLine2}</p>
+              <p>{order?.shippingAddress?.addressLine2}</p>
             )}
             <p>
-              {order.shippingAddress.city}, {order.shippingAddress.state} -{" "}
-              {order.shippingAddress.pincode}
+              {order?.shippingAddress?.city}, {order?.shippingAddress?.state} -{" "}
+              {order?.shippingAddress?.pincode}
             </p>
           </div>
 
@@ -163,12 +163,12 @@ const OrderDetailsDialog: React.FC<OrderDetailsDialogProps> = ({ order }) => {
             <h3 className="mb-2 font-serif text-lg text-green-800">
               Payment Details
             </h3>
-            <p>Order ID: {order.paymentDetails.razorpay_order_id}</p>
-            <p>Payment ID: {order.paymentDetails.razorpay_payment_id}</p>
+            <p>Order ID: {order?.paymentDetails?.razorpay_order_id}</p>
+            <p>Payment ID: {order?.paymentDetails?.razorpay_payment_id}</p>
             <p className="flex">
               Amount:
               <IndianRupee className="mt-1 ml-1 h-4 w-4" />
-              {order.totalAmount.toFixed(2)}
+              {order?.totalAmount.toFixed(2)}
             </p>
           </div>
         </div>

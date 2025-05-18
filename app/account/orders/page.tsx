@@ -30,7 +30,7 @@ const OrdersPage = () => {
     return <BookLoader />;
   }
 
-  if (orders.length === 0) {
+  if (orders?.length === 0) {
     return (
       <div className="mx-auto my-10 max-w-3xl justify-center">
         <NoData
@@ -66,37 +66,37 @@ const OrdersPage = () => {
             <CardContent className="flex-grow">
               <div className="space-y-2">
                 <p className="font-medium">
-                  {order.items.map((item) => item.product.title).join(",")}
+                  {order?.items.map((item) => item.product.title).join(",")}
                 </p>
                 <div className="flex gap-2 text-sm text-gray-600">
                   <span>
-                    {order.items.map((item) => item.product.subject).join(",")}
+                    {order?.items.map((item) => item.product.subject).join(",")}
                   </span>
                   <span>
-                    {order.items.map((item) => item.product.author).join(",")}
+                    {order?.items.map((item) => item.product.author).join(",")}
                   </span>
                 </div>
                 <p className="flex items-center text-sm">
                   <CreditCard className="mr-2 h-4 w-4" />
                   Total:
                   <IndianRupee className="ml-1 h-4 w-4" />
-                  {order.totalAmount.toFixed(2)}
+                  {order?.totalAmount.toFixed(2)}
                 </p>
                 <div className="flex items-center space-x-2">
                   <span className="text-sm">Status</span>
                   <span
                     className={`rounded-full px-2 py-1 text-xs font-semibold ${
-                      order.status === "delivered"
+                      order?.status === "delivered"
                         ? "bg-green-100 text-green-800"
-                        : order.status === "processing"
+                        : order?.status === "processing"
                           ? "bg-yellow-100 text-yellow-800"
-                          : order.status === "shipped"
+                          : order?.status === "shipped"
                             ? "bg-blue-100 text-blue-800"
                             : "bg-red-100 text-red-800"
                     }`}
                   >
-                    {order?.status.charAt(0).toUpperCase() +
-                      order?.status.slice(1)}
+                    {order?.status?.charAt(0).toUpperCase() +
+                      order?.status?.slice(1)}
                   </span>
                 </div>
               </div>
