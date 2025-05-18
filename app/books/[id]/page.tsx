@@ -43,7 +43,7 @@ import {
 } from "@/store/slice/wishlist-slice";
 import { ShareButton } from "@/components/share";
 
-const Page = () => {
+const BookPage = () => {
   const params = useParams();
   const id = params.id;
   const [selectedImage, setSelectedImage] = useState(0);
@@ -421,4 +421,4 @@ const Page = () => {
     </div>
   );
 };
-export default Page;
+export default BookPage;

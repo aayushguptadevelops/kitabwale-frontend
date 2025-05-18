@@ -24,7 +24,7 @@ import {
   Truck,
 } from "lucide-react";
 
-const Page = () => {
+const PaymentSuccessPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { orderId } = useSelector((state: RootState) => state.checkout);
@@ -183,4 +183,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default PaymentSuccessPage;

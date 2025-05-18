@@ -18,7 +18,7 @@ interface ResetPasswordFormData {
   confirmPassword: string;
 }
 
-const Page: React.FC = () => {
+const ResetPasswordPage: React.FC = () => {
   const { token } = useParams<{ token: string }>();
   const router = useRouter();
   const dispatch = useDispatch();
@@ -160,4 +160,4 @@ const Page: React.FC = () => {
     </div>
   );
 };
-export default Page;
+export default ResetPasswordPage;

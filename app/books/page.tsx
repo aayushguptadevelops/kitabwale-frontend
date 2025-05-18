@@ -31,7 +31,7 @@ import { useRouter } from "next/navigation";
 import { useGetProductsQuery } from "@/store/api";
 import { BookDetails } from "@/types";
 
-const Page = () => {
+const BooksPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCondition, setSelectedCondition] = useState<string[]>([]);
   const [selectedType, setSelectedType] = useState<string[]>([]);
@@ -324,4 +324,4 @@ const Page = () => {
     </div>
   );
 };
-export default Page;
+export default BooksPage;

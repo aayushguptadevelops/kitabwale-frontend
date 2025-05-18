@@ -51,7 +51,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 
-const Page = () => {
+const BookSellPage = () => {
   const [uploadedImages, setUploadedImages] = useState<string[]>([]);
   const [addProducts, { isLoading }] = useAddProductsMutation();
   const router = useRouter();
@@ -774,4 +774,4 @@ const Page = () => {
     </div>
   );
 };
-export default Page;
+export default BookSellPage;

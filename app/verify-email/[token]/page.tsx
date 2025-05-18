@@ -11,7 +11,7 @@ import { motion } from "framer-motion";
 import { CheckCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const Page: React.FC = () => {
+const VerifyEmailPage: React.FC = () => {
   const { token } = useParams<{ token: string }>();
   const router = useRouter();
   const dispatch = useDispatch();
@@ -113,4 +113,4 @@ const Page: React.FC = () => {
     </div>
   );
 };
-export default Page;
+export default VerifyEmailPage;

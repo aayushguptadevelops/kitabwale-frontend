@@ -54,7 +54,7 @@ declare global {
   }
 }
 
-const Page = () => {
+const CartPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user.user);
@@ -427,4 +427,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default CartPage;
