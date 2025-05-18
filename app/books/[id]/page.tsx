@@ -238,12 +238,12 @@ const Page = () => {
               <div className="flex items-baseline gap-2">
                 <span className="flex text-3xl font-bold">
                   <IndianRupee className="mt-2 h-6 w-6" />
-                  {book.finalPrice}
+                  {book.finalPrice.toFixed(2)}
                 </span>
                 {book.price && (
                   <span className="text-muted-foreground flex text-lg line-through">
                     <IndianRupee className="mt-1.5 h-4 w-4" />
-                    {book.price}
+                    {book.price.toFixed(2)}
                   </span>
                 )}
 
@@ -298,7 +298,10 @@ const Page = () => {
                     <div className="text-muted-foreground font-medium">
                       Condition
                     </div>
-                    <div>{book.condition}</div>
+                    <div>
+                      {book.condition.charAt(0).toUpperCase() +
+                        book.condition.slice(1)}
+                    </div>
                   </div>
                 </CardContent>
               </Card>

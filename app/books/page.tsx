@@ -277,19 +277,22 @@ const Page = () => {
                               <div className="flex items-baseline gap-2">
                                 <span className="flex text-2xl font-bold text-black">
                                   <IndianRupee className="mt-1.5 h-5 w-5" />
-                                  {book.finalPrice}
+                                  {book.finalPrice.toFixed(2)}
                                 </span>
                                 {book.price && (
                                   <span className="flex text-sm text-zinc-500 line-through">
                                     <IndianRupee className="mt-0.5 h-4 w-4" />
-                                    {book.price}
+                                    {book.price.toFixed(2)}
                                   </span>
                                 )}
                               </div>
 
                               <div className="flex items-center justify-between text-xs text-zinc-400">
                                 <span>{formatDate(book.createdAt)}</span>
-                                <span>{book.condition}</span>
+                                <span>
+                                  {book.condition.charAt(0).toUpperCase() +
+                                    book.condition.slice(1)}
+                                </span>
                               </div>
                             </div>
                           </Link>

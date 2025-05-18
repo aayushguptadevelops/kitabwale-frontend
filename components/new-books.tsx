@@ -105,7 +105,12 @@ const NewBooks = () => {
                                       )}
                                     </div>
                                     <div className="flex items-center justify-between text-xs text-zinc-400">
-                                      <span>{book.condition}</span>
+                                      <span>
+                                        {book.condition
+                                          .charAt(0)
+                                          .toUpperCase() +
+                                          book.condition.slice(1)}
+                                      </span>
                                     </div>
                                   </div>
                                   <div className="pt-4">
