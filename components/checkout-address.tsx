@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import BookLoader from "@/components/book-loader";
+import KitabLoader from "@/components/kitab-loader";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
@@ -105,7 +105,7 @@ const CheckoutAddress: React.FC<CheckoutAddressProps> = ({
   };
 
   if (isLoading) {
-    return <BookLoader />;
+    return <KitabLoader />;
   }
 
   return (

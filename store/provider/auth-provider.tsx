@@ -3,7 +3,7 @@ import { useVerifyAuthMutation } from "@/store/api";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { logout, setEmailVerified, setUser } from "@/store/slice/user-slice";
-import BookLoader from "@/components/book-loader";
+import KitabLoader from "@/components/kitab-loader";
 
 export default function AuthCheck({ children }: { children: React.ReactNode }) {
   const [verifyAuth, { isLoading }] = useVerifyAuthMutation();
@@ -37,7 +37,7 @@ export default function AuthCheck({ children }: { children: React.ReactNode }) {
   }, [verifyAuth, dispatch, user]);
 
   if (isLoading || isCheckingAuth) {
-    return <BookLoader />;
+    return <KitabLoader />;
   }
 
   return <>{children}</>;

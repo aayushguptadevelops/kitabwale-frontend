@@ -1,6 +1,6 @@
 "use client";
 
-import BookLoader from "@/components/book-loader";
+import KitabLoader from "@/components/kitab-loader";
 import NoData from "@/components/no-data";
 import OrderDetailsDialog from "@/components/order-details-dialog";
 import { Button } from "@/components/ui/button";
@@ -27,7 +27,7 @@ const OrdersPage = () => {
   const displayedOrders = showAllOrders ? orders : orders.slice(0, 10);
 
   if (isLoading) {
-    return <BookLoader />;
+    return <KitabLoader />;
   }
 
   if (orders?.length === 0) {

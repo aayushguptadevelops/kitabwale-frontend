@@ -1,6 +1,6 @@
 "use client";
 
-import BookLoader from "@/components/book-loader";
+import KitabLoader from "@/components/kitab-loader";
 import NoData from "@/components/no-data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -49,7 +49,7 @@ const SellingProductsPage = () => {
   };
 
   if (isLoading) {
-    return <BookLoader />;
+    return <KitabLoader />;
   }
 
   if (!books || books.length === 0) {

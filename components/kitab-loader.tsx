@@ -1,6 +1,6 @@
 "use client";
 
-export default function BookLoader() {
+export default function KitabLoader() {
   return (
     <div className="bg-opacity-80 fixed inset-0 z-50 flex flex-col items-center justify-center bg-gray-300 backdrop-blur-md">
       <div className="flex flex-col items-center">

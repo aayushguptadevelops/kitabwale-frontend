@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import confetti from "canvas-confetti";
-import BookLoader from "@/components/book-loader";
+import KitabLoader from "@/components/kitab-loader";
 import { motion } from "framer-motion";
 import {
   Card,
@@ -43,7 +43,7 @@ const PaymentSuccessPage = () => {
   }, [orderId, dispatch, router]);
 
   if (isLoading) {
-    return <BookLoader />;
+    return <KitabLoader />;
   }
 
   if (!orderId || !orderData) {

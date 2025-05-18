@@ -1,6 +1,6 @@
 "use client";
 
-import BookLoader from "@/components/book-loader";
+import KitabLoader from "@/components/kitab-loader";
 import NoData from "@/components/no-data";
 import { Button } from "@/components/ui/button";
 import {
@@ -97,7 +97,7 @@ const WishlistPage = () => {
   };
 
   if (isLoading) {
-    return <BookLoader />;
+    return <KitabLoader />;
   }
 
   if (!wishlistItems.length) {

@@ -31,7 +31,7 @@ import {
   useGetProductByIdQuery,
   useRemoveFromWishlistMutation,
 } from "@/store/api";
-import BookLoader from "@/components/book-loader";
+import KitabLoader from "@/components/kitab-loader";
 import NoData from "@/components/no-data";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
@@ -133,7 +133,7 @@ const BookPage = () => {
   };
 
   if (isLoading) {
-    return <BookLoader />;
+    return <KitabLoader />;
   }
 
   if (!book || isError) {

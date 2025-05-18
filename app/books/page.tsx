@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/accordion";
 import { Checkbox } from "@/components/ui/checkbox";
 import { formatDistanceToNow } from "date-fns";
-import BookLoader from "@/components/book-loader";
+import KitabLoader from "@/components/kitab-loader";
 import {
   Select,
   SelectContent,
@@ -197,7 +197,7 @@ const BooksPage = () => {
 
           <div className="space-y-6">
             {isLoading ? (
-              <BookLoader />
+              <KitabLoader />
             ) : paginatedBooks.length ? (
               <>
                 <div className="flex justify-between">

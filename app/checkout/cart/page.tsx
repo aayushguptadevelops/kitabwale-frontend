@@ -1,6 +1,6 @@
 "use client";
 
-import BookLoader from "@/components/book-loader";
+import KitabLoader from "@/components/kitab-loader";
 import CartItems from "@/components/cart-items";
 import CheckoutAddress from "@/components/checkout-address";
 import NoData from "@/components/no-data";
@@ -291,7 +291,7 @@ const CartPage = () => {
   }
 
   if (isCartLoading || isOrderLoading) {
-    return <BookLoader />;
+    return <KitabLoader />;
   }
 
   return (
