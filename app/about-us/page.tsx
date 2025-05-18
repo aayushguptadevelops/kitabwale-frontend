@@ -1,6 +1,7 @@
 "use client";
 
 import { BookOpen, Users, ShieldCheck } from "lucide-react";
+import Link from "next/link";
 
 const AboutUsPage = () => {
   return (
@@ -132,12 +133,12 @@ const AboutUsPage = () => {
         </p>
 
         <div className="flex justify-center">
-          <a
+          <Link
             href="/"
             className="hover:bg-primary-dark rounded-lg bg-blue-500 px-6 py-3 text-white transition duration-300"
           >
             Get Started
-          </a>
+          </Link>
         </div>
       </div>
     </div>
